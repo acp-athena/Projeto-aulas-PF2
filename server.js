@@ -3,6 +3,7 @@ import routerUsuario from './routes/usuarioRoute.js';
 import routerFilme from './routes/filmeRoute.js';
 import swaggerUi from 'swagger-ui-express'
 import {createRequire} from "module";
+import { errorHandler, catchErrors } from './middlewares/exceptionMiddleware.js';
 const require = createRequire(import.meta.url);
 const outputJson = require("./swaggerOutput.json");
 const app = express();
@@ -10,9 +11,11 @@ const app = express();
 app.use(express.json());
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(outputJson));
-app.use("/usuarios", routerUsuario);
+app.use("/", catchErrors(routerUsuario));
 app.use("/filmes", routerFilme);
 
+//sempre deixar por ultimo
+app.use(errorHandler);
 
 app.listen(5000, () => {
     console.log("backend em execução!");

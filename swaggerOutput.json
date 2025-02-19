@@ -1,17 +1,18 @@
 {
+  "0": "./routes/filmeRoute.js",
   "openapi": "3.0.0",
   "info": {
-    "title": "API REST - PFS2",
-    "description": "API utilizando os padroes REST na disciplina de programação.",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "title": "REST API",
+    "description": ""
   },
   "servers": [
     {
-      "url": "http://localhost:5000/"
+      "url": "http://localhost:3000/"
     }
   ],
   "paths": {
-    "/usuarios/": {
+    "/usuario": {
       "get": {
         "tags": [
           "Usuarios"
@@ -21,9 +22,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       },
@@ -39,9 +37,6 @@
           },
           "400": {
             "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         },
         "requestBody": {
@@ -63,7 +58,7 @@
         }
       }
     },
-    "/usuarios/{codigo}": {
+    "/usuario/{codigo}": {
       "delete": {
         "tags": [
           "Usuarios"
@@ -83,9 +78,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       },
@@ -111,9 +103,6 @@
           },
           "404": {
             "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       },
@@ -139,9 +128,6 @@
           },
           "400": {
             "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         },
         "requestBody": {
@@ -162,167 +148,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/filmes/": {
-      "get": {
-        "tags": [
-          "Filmes"
-        ],
-        "summary": "Listagem de filmes cadastrados no banco de dados",
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Filmes"
-        ],
-        "summary": "Cadastrar filmes no banco de dados",
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "nome": {
-                    "example": "any"
-                  },
-                  "genero": {
-                    "example": "any"
-                  },
-                  "ano": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/filmes/{codigo}": {
-      "get": {
-        "tags": [
-          "Filmes"
-        ],
-        "summary": "Buscar filme pelo ID",
-        "description": "",
-        "parameters": [
-          {
-            "name": "codigo",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Filmes"
-        ],
-        "summary": "Alterar filme salvo no banco de dados",
-        "description": "",
-        "parameters": [
-          {
-            "name": "codigo",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "example": "any"
-                  },
-                  "nome": {
-                    "example": "any"
-                  },
-                  "genero": {
-                    "example": "any"
-                  },
-                  "ano": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Filmes"
-        ],
-        "summary": "Exclusão de filme salvo no banco de dados",
-        "description": "",
-        "parameters": [
-          {
-            "name": "codigo",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }
