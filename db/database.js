@@ -1,6 +1,6 @@
-var mysql = require('mysql2');
+import mysql from 'mysql2'
 
-class Database {
+export default class Database {
 
     #conexao;
 
@@ -9,8 +9,8 @@ class Database {
     constructor() {
 
         this.#conexao = mysql.createPool({
-            host: '144.22.240.206', //endereço do nosso banco de dados na nuvem
-            database: 'DB_10442312907', //a database de cada um de vocês possui a nomenclatura DB_(RA)
+            host: '132.226.245.178', //endereço do nosso banco de dados na nuvem
+            database: 'PFS2_10442312907', //a database de cada um de vocês possui a nomenclatura DB_(RA)
             user: '10442312907', // usuario e senha de cada um de vocês é o RA
             password: '10442312907',
         });
@@ -52,5 +52,3 @@ class Database {
         })
     }
 }
-
-module.exports = Database;

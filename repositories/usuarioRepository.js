@@ -1,65 +1,75 @@
+import Database from "../db/database.js";
+import PerfilEntity from "../entities/perfilEntity.js";
 import UsuarioEntity from "../entities/usuarioEntity.js";
-
-let listaBanco = [
-    {
-        colunaId: 1,
-        colunaNome: "Ana",
-        colunaEmail: "ana@gmail.br"
-    },
-    {
-        colunaId: 2,
-        colunaNome: "Carol",
-        colunaEmail: "carol@gmail.com"
-    }
-];
 
 export default class UsuarioRepository {
 
+    #banco;
 
-    listar() {
-        //aqui teríamos a execução do comando sql
-        // let sql = "select ...."
-        //mapeamento do banco de dados para a entidade
+    constructor(){
+        this.#banco = new Database();
+    }
+
+    async listar() {
+
+        let sql = `select * from tb_usuario u inner join tb_perfil p on u.per_id = p.per_id`;
+        let rows = await this.#banco.ExecutaComando(sql);
+
         let lista = [];
-        for(let i=0; i<listaBanco.length; i++) {
+        for(let i=0; i<rows.length; i++) {
+            let row = rows[i];
             lista.push(
-                new UsuarioEntity(
-                    listaBanco[i].colunaId,
-                    listaBanco[i].colunaNome,
-                    listaBanco[i].colunaEmail
-                )
+                new UsuarioEntity(row["usu_id"], row["usu_nome"], row["usu_email"], row["usu_ativo"], row["usu_senha"], new PerfilEntity (row["per_id"], row["per_descricao"]))
             );
         }
 
         return lista;
     }
 
-    cadastrar(entidade) {
+    async cadastrar(entidade) {
 
-        listaBanco.push({
-            colunaId: entidade.id,
-            colunaEmail: entidade.email,
-            colunaNome: entidade.nome
-        })
+        let sql = `insert into tb_usuario (usu_nome, usu_email, usu_ativo, usu_senha, per_id)values(?,?,?,?,?)`;
+        let params = [entidade.nome, entidade.email, entidade.ativo, entidade.senha, entidade.perfil.id];
+        let result = await this.#banco.ExecutaComandoNonQuery(sql, params);
+        
+        return result;
     }
 
-    obter(codigo){
-        return listaBanco.filter(x => x.colunaId == codigo);
+    async obter(codigo){
+
+        let sql = "select * from tb_usuario u inner join tb_perfil p on u.per_id = p.per_id where u.usu_id = ?";
+
+        let params = [codigo];
+
+        let rows = await this.#banco.ExecutaComando(sql, params);
+        let lista = [];
+        for(let i = 0; i < rows.length; i++){
+            let row = rows[i];
+            lista.push(new UsuarioEntity(row["usu_id"], row["usu_nome"], row["usu_email"], row["usu_ativo"], row["usu_senha"], new PerfilEntity (row["per_id"], row["per_descricao"])))
+        }
+
+        return lista;
     }
 
     excluir(codigo){
-        listaBanco = listaBanco.filter(x => x.colunaId != codigo);
+        
+        let sql = "delete from tb_usuario where usu_id = ?"
+        let params = [codigo];
+
+        let result = this.#banco.ExecutaComandoNonQuery(sql, params);
+
+        return result;
     }
 
-    alterar(entidade){
-        for(let i = 0; i < listaBanco.length; i++){
-            if(listaBanco[i].colunaId == entidade.id){
-                listaBanco[i] = {
-                    colunaId: entidade.id,
-                    colunaNome: entidade.nome,
-                    colunaEmail: entidade.email
-                }
-            }
-        }
+    async alterar(entidade){
+
+        let sql = "update tb_usuario set usu_nome = ?, usu_email = ?, usu_ativo = ?, usu_senha = ?, per_id = ? where usu_id = ?"
+
+        let params = [entidade.nome, entidade.email, entidade.ativo, entidade.senha, entidade.perfil.id, entidade.id];
+
+        let result = await this.#banco.ExecutaComandoNonQuery(sql, params);
+
+        return result;
+
     }
 }

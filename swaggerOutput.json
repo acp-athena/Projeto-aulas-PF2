@@ -1,14 +1,13 @@
 {
-  "0": "./routes/filmeRoute.js",
   "openapi": "3.0.0",
   "info": {
-    "version": "1.0.0",
-    "title": "REST API",
-    "description": ""
+    "title": "API REST - PFS2",
+    "description": "API utilizando os padroes REST na disciplina de programação.",
+    "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "http://localhost:3000/"
+      "url": "http://localhost:5000/"
     }
   ],
   "paths": {
@@ -49,6 +48,15 @@
                     "example": "any"
                   },
                   "email": {
+                    "example": "any"
+                  },
+                  "ativo": {
+                    "example": "any"
+                  },
+                  "senha": {
+                    "example": "any"
+                  },
+                  "perfil": {
                     "example": "any"
                   }
                 }
@@ -143,6 +151,15 @@
                     "example": "any"
                   },
                   "email": {
+                    "example": "any"
+                  },
+                  "ativo": {
+                    "example": "any"
+                  },
+                  "senha": {
+                    "example": "any"
+                  },
+                  "perfil": {
                     "example": "any"
                   }
                 }

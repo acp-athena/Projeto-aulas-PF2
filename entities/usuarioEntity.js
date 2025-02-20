@@ -5,6 +5,9 @@ export default class UsuarioEntity {
     #id;
     #nome;
     #email;
+    #ativo;
+    #senha;
+    #perfil;
 
     get id(){
         return this.#id;
@@ -28,17 +31,43 @@ export default class UsuarioEntity {
         this.#email = value;
     }
 
-    constructor(id, nome, email) {
+    get ativo(){
+        return this.#ativo;
+    }
+    set ativo(value){
+        this.#ativo = value;
+    }
+
+    get senha(){
+        return this.#senha;
+    }
+    set senha(value){
+        this.#senha = value;
+    }
+
+    get perfil(){
+        return this.#perfil;
+    }
+    set perfil(value){
+        this.#perfil = value;
+    }
+
+    constructor(id, nome, email, ativo, senha, perfil) {
         this.#id = id;
         this.#nome = nome;
         this.#email = email;
+        this.#ativo = ativo;
+        this.#senha = senha;
+        this.#perfil = perfil;
     }
 
     toJSON() {
         return {
             id: this.#id,
             nome: this.#nome,
-            email: this.#email
+            email: this.#email,
+            ativo: this.#ativo,
+            perfil: this.#perfil.toJSON()   
         }
     }
 }
