@@ -9,10 +9,11 @@ export default class UsuarioEntity {
     #senha;
     #perfil;
 
-    get id(){
+    get id() {
         return this.#id;
     }
-    set id(value){
+
+    set id(value) {
         this.#id = value;
     }
 
@@ -31,24 +32,25 @@ export default class UsuarioEntity {
         this.#email = value;
     }
 
-    get ativo(){
+    get ativo() {
         return this.#ativo;
     }
-    set ativo(value){
+    set ativo(value) {
         this.#ativo = value;
     }
 
-    get senha(){
+    get senha() {
         return this.#senha;
     }
-    set senha(value){
+
+    set senha(value) {
         this.#senha = value;
     }
 
-    get perfil(){
+    get perfil() {
         return this.#perfil;
     }
-    set perfil(value){
+    set perfil(value) {
         this.#perfil = value;
     }
 
@@ -67,7 +69,7 @@ export default class UsuarioEntity {
             nome: this.#nome,
             email: this.#email,
             ativo: this.#ativo,
-            perfil: this.#perfil.toJSON()   
+            perfil: this.#perfil.toJSON()
         }
     }
 }

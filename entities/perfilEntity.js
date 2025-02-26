@@ -1,30 +1,34 @@
-export default class PerfilEntity{
+
+
+
+export default class PerfilEntity {
 
     #id;
     #descricao;
 
-
-    get id(){
+    get id() {
         return this.#id;
     }
-    set id(value){
+
+    set id(value) {
         this.#id = value;
     }
 
-    get descricao(){
-        return this.#descricao;
+    get descricao() {
+        return this.#descricao
     }
-    set descricao(value){
+
+    set descricao(value) {
         this.#descricao = value;
     }
 
-    constructor(id, descricao){
+    constructor(id, descricao) {
         this.#id = id;
         this.#descricao = descricao;
     }
 
-    toJSON(){
-        return{
+    toJSON() {
+        return {
             id: this.#id,
             descricao: this.#descricao
         };

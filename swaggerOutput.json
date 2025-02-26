@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "API REST - PFS2",
-    "description": "API utilizando os padroes REST na disciplina de programação.",
+    "description": "API utilizando os padrões REST na disciplina de programação Fullstack 2",
     "version": "1.0.0"
   },
   "servers": [
@@ -14,21 +14,33 @@
     "/usuario": {
       "get": {
         "tags": [
-          "Usuarios"
+          "Usuários"
         ],
-        "summary": "Endpoint para listar todos os usuarios do banco de dados",
+        "summary": "Endpoint para listar todos os usuários do banco de dados",
         "description": "",
+        "parameters": [
+          {
+            "name": "chave",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       },
       "post": {
         "tags": [
-          "Usuarios"
+          "Usuários"
         ],
-        "summary": "Endpoint para cadastrar um usuario no banco de dados",
+        "summary": "Cadastra um usuário no banco de dados",
         "description": "",
         "responses": {
           "201": {
@@ -64,72 +76,13 @@
             }
           }
         }
-      }
-    },
-    "/usuario/{codigo}": {
-      "delete": {
-        "tags": [
-          "Usuarios"
-        ],
-        "summary": "Endpoint para deletar um usuario do banco de dados",
-        "description": "",
-        "parameters": [
-          {
-            "name": "codigo",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Usuarios"
-        ],
-        "summary": "Endpoint para obter um usuario do banco de dados",
-        "description": "",
-        "parameters": [
-          {
-            "name": "codigo",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
       },
       "put": {
         "tags": [
-          "Usuarios"
+          "Usuários"
         ],
-        "summary": "Endpoint para alterar um usuario do banco de dados",
+        "summary": "Atualiza um usuário através das informações enviadas",
         "description": "",
-        "parameters": [
-          {
-            "name": "codigo",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -165,6 +118,55 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/usuario/{codigo}": {
+      "delete": {
+        "tags": [
+          "Usuários"
+        ],
+        "summary": "Exclui um usuário especificado através do parâmetro",
+        "description": "",
+        "parameters": [
+          {
+            "name": "codigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Usuários"
+        ],
+        "summary": "Retorna um usuário especificado através do parâmetro",
+        "description": "",
+        "parameters": [
+          {
+            "name": "codigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }

@@ -6,20 +6,23 @@ export default class UsuarioRepository {
 
     #banco;
 
-    constructor(){
+    constructor() {
         this.#banco = new Database();
     }
 
     async listar() {
 
-        let sql = `select * from tb_usuario u inner join tb_perfil p on u.per_id = p.per_id`;
+        let sql = `select * from tb_usuario u 
+        inner join tb_perfil p on u.per_id = p.per_id`;
         let rows = await this.#banco.ExecutaComando(sql);
-
+        //mapeamento do banco de dados para a entidade
         let lista = [];
         for(let i=0; i<rows.length; i++) {
             let row = rows[i];
             lista.push(
-                new UsuarioEntity(row["usu_id"], row["usu_nome"], row["usu_email"], row["usu_ativo"], row["usu_senha"], new PerfilEntity (row["per_id"], row["per_descricao"]))
+                new UsuarioEntity(row["usu_id"], row["usu_nome"], 
+                    row["usu_email"], row["usu_ativo"], row["usu_senha"], 
+                    new PerfilEntity(row["per_id"], row["per_descricao"]))
             );
         }
 
@@ -27,49 +30,60 @@ export default class UsuarioRepository {
     }
 
     async cadastrar(entidade) {
+        let sql = `insert into tb_usuario 
+                        (usu_nome, usu_email, usu_ativo, usu_senha, per_id)
+                    values
+                        (?, ?, ?, ?, ?)`;
+        let params = [entidade.nome, entidade.email, entidade.ativo, 
+                        entidade.senha, entidade.perfil.id];
 
-        let sql = `insert into tb_usuario (usu_nome, usu_email, usu_ativo, usu_senha, per_id)values(?,?,?,?,?)`;
-        let params = [entidade.nome, entidade.email, entidade.ativo, entidade.senha, entidade.perfil.id];
         let result = await this.#banco.ExecutaComandoNonQuery(sql, params);
-        
+
         return result;
     }
 
-    async obter(codigo){
-
-        let sql = "select * from tb_usuario u inner join tb_perfil p on u.per_id = p.per_id where u.usu_id = ?";
-
+    async obter(codigo) {
+        
+        let sql = `select * from tb_usuario u 
+            inner join tb_perfil p on u.per_id = p.per_id where u.usu_id = ?`;
+        
         let params = [codigo];
 
         let rows = await this.#banco.ExecutaComando(sql, params);
         let lista = [];
-        for(let i = 0; i < rows.length; i++){
+        for(let i = 0; i < rows.length; i++) {
             let row = rows[i];
-            lista.push(new UsuarioEntity(row["usu_id"], row["usu_nome"], row["usu_email"], row["usu_ativo"], row["usu_senha"], new PerfilEntity (row["per_id"], row["per_descricao"])))
+            lista.push(new UsuarioEntity(row["usu_id"], row["usu_nome"], row["usu_email"],
+                                            row["usu_ativo"], row["usu_senha"], 
+                                            new PerfilEntity(row["per_id"], row["per_descricao"])
+            ));
         }
 
         return lista;
     }
 
-    excluir(codigo){
+    async excluir(codigo) {
         
         let sql = "delete from tb_usuario where usu_id = ?"
         let params = [codigo];
 
-        let result = this.#banco.ExecutaComandoNonQuery(sql, params);
+        let result = await this.#banco.ExecutaComandoNonQuery(sql, params);
 
         return result;
     }
 
-    async alterar(entidade){
-
-        let sql = "update tb_usuario set usu_nome = ?, usu_email = ?, usu_ativo = ?, usu_senha = ?, per_id = ? where usu_id = ?"
-
-        let params = [entidade.nome, entidade.email, entidade.ativo, entidade.senha, entidade.perfil.id, entidade.id];
+    async alterar(entidade) {
+        let sql = `update tb_usuario set usu_nome = ?,
+                                        usu_email = ?,
+                                        usu_ativo = ?,
+                                        usu_senha = ?,
+                                        per_id = ?
+                    where usu_id = ?`;
+        let params = [entidade.nome, entidade.email, 
+            entidade.ativo, entidade.senha, entidade.perfil.id, entidade.id];
 
         let result = await this.#banco.ExecutaComandoNonQuery(sql, params);
 
         return result;
-
     }
 }

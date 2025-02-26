@@ -1,7 +1,4 @@
-
-
 export const errorHandler = (err, req, res, next) => {
-
     const status = 500;
     const msg = "Erro interno de servidor!"
     const detalhes = err.message;
